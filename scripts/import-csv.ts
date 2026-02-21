@@ -12,7 +12,7 @@ dotenv.config({ path: path.join(__dirname, '../.env.local') });
 
 const csvProjects = JSON.parse(fs.readFileSync(path.join(__dirname, '../projects.json'), 'utf8'));
 
-function getBranch(domain) {
+function getBranch(domain: string) {
     const d = domain.toLowerCase();
     if (d.includes('iot') || d.includes('robotics') || d.includes('telecom') || d.includes('ece') || d.includes('embedded')) {
         return 'ECE';
@@ -20,7 +20,7 @@ function getBranch(domain) {
     return 'CSE';
 }
 
-function getDifficulty(domain) {
+function getDifficulty(domain: string) {
     const d = domain.toLowerCase();
     if (d.includes('gen-ai') || d.includes('blockchain') || d.includes('deeplearning') || d.includes('medical ai')) {
         return 'Advanced';
@@ -29,13 +29,13 @@ function getDifficulty(domain) {
 }
 
 const formattedProjects = csvProjects
-    .filter(p => p['Project Title'] && p['Project Title'].trim() !== '')
-    .map(p => ({
+    .filter((p: any) => p['Project Title'] && p['Project Title'].trim() !== '')
+    .map((p: any) => ({
         projectId: `DRAF${p.ID.padStart(3, '0')}`,
         projectName: p['Project Title'],
         category: 'Major', // Defaulting to Major for these academic projects
         domain: p.Domain || 'General IT',
-        technologyStack: p.Technologies ? p.Technologies.split(',').map(t => t.trim()) : [],
+        technologyStack: p.Technologies ? p.Technologies.split(',').map((t: string) => t.trim()) : [],
         branch: getBranch(p.Domain || ''),
         difficultyLevel: getDifficulty(p.Domain || ''),
         description: `A sophisticated ${p.Domain} project focusing on ${p['Project Title']}. Built using ${p.Technologies}.`,
