@@ -10,6 +10,7 @@
     "seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
+    "dotenv": "^17.3.1",
     "framer-motion": "^12.34.0",
     "lucide-react": "^0.572.0",
     "mongodb": "^6.21.0",

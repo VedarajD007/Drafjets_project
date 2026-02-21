@@ -1,7 +1,7 @@
 // Contact Information
 export const CONTACT_INFO = {
-  phones: ['7411061639', '8073028732', '8088128508'],
-  email: 'drafjet.solutions@gmail.com',
+  phones: ['7411061639', '8088128508', '8073028732'],
+  email: 'drafjets.solutions@gmail.com',
   whatsappNumber: '7411061639',
 };
 
@@ -69,15 +69,14 @@ export const WHY_CHOOSE_US = [
   },
 ];
 
-// Project Categories
+// Refined Project Categories for better filtering
 export const PROJECT_CATEGORIES = [
-  { label: 'All', value: 'all' },
-  { label: 'Mini', value: 'Mini' },
+  { label: 'All Projects', value: 'all' },
+  { label: 'MERN Stack', value: 'MERN' },
+  { label: 'AI/ML', value: 'ML' },
+  { label: 'IoT & ECE', value: 'IoT' },
   { label: 'Major', value: 'Major' },
-  { label: 'MERN', value: 'MERN' },
-  { label: 'ML', value: 'ML' },
-  { label: 'IoT', value: 'IoT' },
-  { label: 'ECE', value: 'ECE' },
+  { label: 'Mini', value: 'Mini' },
 ];
 
 // Site Info

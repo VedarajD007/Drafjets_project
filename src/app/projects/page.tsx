@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Search, Filter } from 'lucide-react';
-import { PROJECT_CATEGORIES } from '@/lib/constants';
-import Link from 'next/link';
+import { Search, Filter, LayoutGrid, Table2, Database, BookOpen, Hash, Mail, Phone } from 'lucide-react';
+import { PROJECT_CATEGORIES, CONTACT_INFO } from '@/lib/constants';
 
 interface Project {
   _id: string;
@@ -19,208 +18,247 @@ interface Project {
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [filtered, setFiltered] = useState<Project[]>([]);
+  const [category, setCategory] = useState('all');
+  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const [view, setView] = useState<'table' | 'grid'>('table');
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
+  useEffect(() => { fetchProjects(); }, []);
 
   const fetchProjects = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/projects');
-      if (response.ok) {
-        const data = await response.json();
-        setProjects(data);
-        setFilteredProjects(data);
-      }
-    } catch (error) {
-      console.error('Failed to fetch projects:', error);
-    } finally {
-      setLoading(false);
-    }
+      const res = await fetch('/api/projects');
+      if (res.ok) { const d = await res.json(); setProjects(d); setFiltered(d); }
+    } catch (e) { console.error(e); }
+    finally { setLoading(false); }
   };
 
   useEffect(() => {
-    let filtered = projects;
-
-    if (selectedCategory !== 'all') {
-      if (selectedCategory === 'MERN') {
-        filtered = filtered.filter(p =>
-          p.technologyStack.some(t => ['MongoDB', 'Express', 'React', 'Node.js'].includes(t))
-        );
-      } else if (selectedCategory === 'ML') {
-        filtered = filtered.filter(p =>
-          p.technologyStack.some(t => ['Python', 'TensorFlow', 'PyTorch', 'ML'].includes(t))
-        );
-      } else if (selectedCategory === 'IoT') {
-        filtered = filtered.filter(p =>
-          p.technologyStack.some(t => ['IoT', 'Arduino', 'Raspberry Pi'].includes(t))
-        );
-      } else if (selectedCategory === 'ECE') {
-        filtered = filtered.filter(p => p.branch === 'ECE');
-      } else {
-        filtered = filtered.filter(p => p.category === selectedCategory);
-      }
+    let f = projects;
+    if (category !== 'all') {
+      if (category === 'MERN') f = f.filter(p => p.technologyStack.some(t => ['MongoDB', 'Express', 'React', 'Node.js'].includes(t)));
+      else if (category === 'ML') f = f.filter(p => p.technologyStack.some(t => ['Python', 'TensorFlow', 'PyTorch', 'ML', 'CNN'].includes(t)));
+      else if (category === 'IoT') f = f.filter(p => p.technologyStack.some(t => ['IoT', 'Arduino', 'Raspberry Pi', 'NodeMCU'].includes(t)));
+      else if (category === 'ECE') f = f.filter(p => p.branch === 'ECE');
+      else f = f.filter(p => p.category === category);
     }
-
-    if (searchTerm) {
-      filtered = filtered.filter(p =>
-        p.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.domain.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+    if (search) {
+      const q = search.toLowerCase();
+      f = f.filter(p => p.projectName.toLowerCase().includes(q) || p.domain.toLowerCase().includes(q) || p.technologyStack.some(t => t.toLowerCase().includes(q)));
     }
+    setFiltered(f);
+  }, [category, search, projects]);
 
-    setFilteredProjects(filtered);
-  }, [selectedCategory, searchTerm, projects]);
+  const diffColor = (l: string) => {
+    if (l === 'Beginner') return 'bg-emerald-50 text-emerald-700 border-emerald-100';
+    if (l === 'Intermediate') return 'bg-amber-50 text-amber-700 border-amber-100';
+    if (l === 'Advanced') return 'bg-brand-50 text-brand-700 border-brand-100';
+    return 'bg-dark-50 text-dark-400 border-dark-100';
+  };
 
   return (
-    <div className="min-h-screen bg-background py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white pt-32 pb-24 page-enter">
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-50/20 rounded-full blur-[120px] -z-10" />
+
+      <div className="container-main">
+
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold mb-4">
-            <span className="bg-gradient-neon bg-clip-text text-transparent">Projects</span>
+        <div className="max-w-3xl mb-16 space-y-4 text-center md:text-left mx-auto md:mx-0">
+          <div className="badge-uniform mx-auto md:mx-0"><BookOpen className="w-4 h-4" />Project Library</div>
+          <h1 className="heading-m text-dark-900 !mb-2">
+            Academic <span className="text-gradient">Masterpieces</span>
           </h1>
-          <p className="text-foreground/60 text-lg">
-            Browse our collection of professional projects for IT students
+          <p className="text-lg text-dark-500 leading-relaxed">
+            Professional mini & major projects architecture for engineering success. Reach out to get started.
           </p>
         </div>
 
-        {/* Search and Filter */}
-        <div className="mb-12 space-y-6">
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-4 top-3.5 w-5 h-5 text-primary" />
+        {/* Toolbar */}
+        <div className="flex flex-col lg:flex-row gap-6 mb-12 items-stretch lg:items-center">
+          <div className="relative flex-grow group">
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-300 group-focus-within:text-brand-500 transition-colors" />
             <input
               type="text"
-              placeholder="Search projects..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-card border border-primary/20 rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:border-primary focus:shadow-neon-cyan transition-all"
+              placeholder="Search by keywords..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-14 pr-6 py-4 bg-dark-50 border border-dark-200 rounded-2xl focus:outline-none focus:border-brand-300 focus:bg-white transition-all"
             />
           </div>
 
-          {/* Filter */}
-          <div className="flex items-center gap-2 mb-6">
-            <Filter className="w-5 h-5 text-primary" />
-            <span className="text-foreground font-semibold">Category:</span>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            {PROJECT_CATEGORIES.map((category) => (
+          <div className="flex items-center gap-2 flex-wrap">
+            {PROJECT_CATEGORIES.map((c) => (
               <button
-                key={category.value}
-                onClick={() => setSelectedCategory(category.value)}
-                className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 ${
-                  selectedCategory === category.value
-                    ? 'bg-gradient-neon text-background shadow-neon-cyan'
-                    : 'bg-card border border-primary/20 text-foreground hover:border-primary/50'
-                }`}
+                key={c.value}
+                onClick={() => setCategory(c.value)}
+                className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${category === c.value
+                  ? 'bg-dark-900 text-white border-dark-900 shadow-lg'
+                  : 'bg-white text-dark-600 border-dark-200 hover:border-brand-600 hover:text-brand-600'
+                  }`}
               >
-                {category.label}
+                {c.label}
               </button>
             ))}
           </div>
+
+          <div className="flex bg-dark-50 p-1.5 rounded-2xl border border-dark-200 ml-auto">
+            <button onClick={() => setView('table')} className={`p-2.5 rounded-xl transition-all ${view === 'table' ? 'bg-white text-brand-600 shadow-sm' : 'text-dark-400'}`}><Table2 className="w-5 h-5" /></button>
+            <button onClick={() => setView('grid')} className={`p-2.5 rounded-xl transition-all ${view === 'grid' ? 'bg-white text-brand-600 shadow-sm' : 'text-dark-400'}`}><LayoutGrid className="w-5 h-5" /></button>
+          </div>
         </div>
 
-        {/* Projects Table */}
-        <div className="bg-card border border-primary/20 rounded-xl overflow-hidden">
-          {loading ? (
-            <div className="p-8 text-center text-foreground/60">Loading projects...</div>
-          ) : filteredProjects.length === 0 ? (
-            <div className="p-8 text-center text-foreground/60">
-              No projects found. Try adjusting your filters.
-            </div>
-          ) : (
+        {/* Main Content */}
+        {loading ? (
+          <div className="py-40 flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="w-12 h-12 border-4 border-brand-100 border-t-brand-600 rounded-full animate-spin mx-auto" />
+            <p className="font-black text-dark-300 uppercase tracking-widest text-[10px]">Filtering Database...</p>
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="py-40 flex flex-col items-center justify-center text-center space-y-4">
+            <div className="w-20 h-20 rounded-full bg-dark-50 flex items-center justify-center text-dark-200"><Database className="w-10 h-10" /></div>
+            <h3 className="text-xl font-black text-dark-900">No Projects Found</h3>
+            <p className="text-dark-400 max-w-sm">Try clearing your filters or using different search keywords.</p>
+          </div>
+        ) : view === 'table' ? (
+          /* PREMIUM SPACIOUS TABLE */
+          <div className="premium-table-container">
             <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="border-b border-primary/20 bg-background">
+              <table className="premium-table">
+                <thead>
                   <tr>
-                    <th className="px-6 py-4 text-left font-semibold text-foreground">Project Name</th>
-                    <th className="px-6 py-4 text-left font-semibold text-foreground">Domain</th>
-                    <th className="px-6 py-4 text-left font-semibold text-foreground">Technology</th>
-                    <th className="px-6 py-4 text-left font-semibold text-foreground">Category</th>
-                    <th className="px-6 py-4 text-left font-semibold text-foreground">Action</th>
+                    <th className="w-[120px]">ID</th>
+                    <th>Full Project Title</th>
+                    <th>Core Domain</th>
+                    <th>Tech Stack</th>
+                    <th className="text-right">Contact Us</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredProjects.map((project, index) => (
-                    <tr
-                      key={project._id}
-                      className="border-b border-primary/10 hover:bg-primary/5 transition-colors"
-                    >
-                      <td className="px-6 py-4 text-foreground font-semibold">{project.projectName}</td>
-                      <td className="px-6 py-4 text-foreground/60">{project.domain}</td>
-                      <td className="px-6 py-4">
-                        <div className="flex flex-wrap gap-2">
-                          {project.technologyStack.slice(0, 2).map((tech) => (
-                            <span
-                              key={tech}
-                              className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                          {project.technologyStack.length > 2 && (
-                            <span className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">
-                              +{project.technologyStack.length - 2}
-                            </span>
-                          )}
+                  {filtered.map((p) => (
+                    <tr key={p._id} className="group cursor-pointer">
+                      <td className="font-bold text-dark-400">
+                        <div className="flex items-center gap-2 opacity-60">
+                          <Hash className="w-3.5 h-3.5" />
+                          {p.projectId}
                         </div>
                       </td>
-                      <td className="px-6 py-4">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            project.category === 'Major'
-                              ? 'bg-secondary/10 text-secondary'
-                              : 'bg-success/10 text-success'
-                          }`}
-                        >
-                          {project.category}
+                      <td>
+                        <div className="space-y-1.5">
+                          <div className="text-[17px] font-black text-dark-900 group-hover:text-brand-600 transition-colors leading-tight" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                            {p.projectName}
+                          </div>
+                          <div className={`inline-flex px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider border ${diffColor(p.difficultyLevel)}`}>
+                            {p.difficultyLevel}
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="text-[11px] font-black uppercase tracking-widest text-dark-400">
+                          {p.domain}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
-                        <Link
-                          href={`/projects/${project._id}`}
-                          className="text-primary hover:text-primary/80 font-semibold text-sm hover:underline"
-                        >
-                          View Details
-                        </Link>
+                      <td>
+                        <div className="flex flex-wrap gap-2 max-w-[250px]">
+                          {p.technologyStack.slice(0, 3).map(t => (
+                            <span key={t} className="text-[10px] font-bold text-dark-400/80 border border-dark-200 px-2 py-0.5 rounded-md uppercase tracking-tight">
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="text-right min-w-[280px]">
+                        <div className="flex flex-col items-end gap-1.5">
+                          <div className="flex gap-3 text-[11px] font-bold text-dark-600">
+                            {CONTACT_INFO.phones.map((phone) => (
+                              <a
+                                key={phone}
+                                href={`https://wa.me/${phone}?text=I'm interested in project: ${p.projectName} (${p.projectId})`}
+                                className="flex items-center gap-1 hover:text-brand-600 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Phone className="w-3 h-3 text-brand-600" /> {phone}
+                              </a>
+                            ))}
+                          </div>
+                          <a
+                            href={`mailto:${CONTACT_INFO.email}?subject=Inquiry about ${p.projectName}`}
+                            className="flex items-center gap-1 text-[11px] font-bold text-dark-400 hover:text-brand-600 transition-colors"
+                          >
+                            <Mail className="w-3 h-3 text-brand-600" /> {CONTACT_INFO.email}
+                          </a>
+                        </div>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          /* SPACIOUS GRID */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filtered.map((p) => (
+              <div
+                key={p._id}
+                className="group card-uniform flex flex-col items-start space-y-6 !rounded-[40px] !p-10"
+              >
+                <div className="flex items-center justify-between w-full">
+                  <div className="text-[10px] font-black text-brand-600 uppercase tracking-[0.2em]">{p.projectId}</div>
+                  <span className={`px-2 py-1 rounded-md text-[9px] font-black uppercase tracking-widest border ${diffColor(p.difficultyLevel)}`}>{p.difficultyLevel}</span>
+                </div>
+                <h3 className="text-2xl font-black text-dark-900 leading-tight group-hover:text-brand-600 transition-colors" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                  {p.projectName}
+                </h3>
+                <p className="text-dark-500 text-sm leading-relaxed line-clamp-3 font-medium">
+                  {p.description}
+                </p>
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {p.technologyStack.slice(0, 4).map(t => (
+                    <span key={t} className="px-3 py-1 bg-dark-50 text-dark-500 rounded-lg text-[10px] font-black uppercase tracking-widest">{t}</span>
+                  ))}
+                </div>
+                <div className="pt-6 w-full border-t border-dark-100 flex flex-col gap-3">
+                  <div className="text-[10px] font-black text-dark-300 uppercase tracking-widest">Contact for implementation</div>
+                  <div className="flex flex-wrap gap-4">
+                    {CONTACT_INFO.phones.map(ph => (
+                      <a key={ph} href={`https://wa.me/${ph}`} className="text-xs font-bold text-dark-900 hover:text-brand-600 transition-all flex items-center gap-1">
+                        <Phone className="w-3 h-3 text-brand-600" /> {ph}
+                      </a>
+                    ))}
+                  </div>
+                  <a href={`mailto:${CONTACT_INFO.email}`} className="text-xs font-bold text-dark-400 hover:text-brand-600 transition-all flex items-center gap-1">
+                    <Mail className="w-3 h-3 text-brand-600" /> {CONTACT_INFO.email}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          <div className="p-8 bg-card border border-primary/20 rounded-xl text-center">
-            <div className="text-4xl font-bold bg-gradient-neon bg-clip-text text-transparent">
-              {projects.length}
+        {/* Global Stats Section */}
+        <div className="mt-24 pt-24 border-t border-dark-100 flex flex-col md:flex-row items-center justify-between gap-12">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-12 md:gap-24">
+            <div className="space-y-1 text-center md:text-left">
+              <div className="text-5xl font-black text-dark-900 tracking-tighter" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{projects.length}</div>
+              <div className="text-[10px] font-black text-dark-400 uppercase tracking-[0.3em]">Total Systems</div>
             </div>
-            <p className="text-foreground/60 mt-2">Total Projects</p>
+            <div className="space-y-1 text-center md:text-left">
+              <div className="text-5xl font-black text-brand-600 tracking-tighter" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>10+</div>
+              <div className="text-[10px] font-black text-dark-400 uppercase tracking-[0.3em]">Special Domains</div>
+            </div>
+            <div className="space-y-1 text-center md:text-left">
+              <div className="text-5xl font-black text-dark-900 tracking-tighter" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>1.2k</div>
+              <div className="text-[10px] font-black text-dark-400 uppercase tracking-[0.3em]">Daily Users</div>
+            </div>
           </div>
 
-          <div className="p-8 bg-card border border-primary/20 rounded-xl text-center">
-            <div className="text-4xl font-bold bg-gradient-neon bg-clip-text text-transparent">
-              {new Set(projects.map(p => p.domain)).size}
-            </div>
-            <p className="text-foreground/60 mt-2">Different Domains</p>
-          </div>
-
-          <div className="p-8 bg-card border border-primary/20 rounded-xl text-center">
-            <div className="text-4xl font-bold bg-gradient-neon bg-clip-text text-transparent">
-              {new Set(projects.flatMap(p => p.technologyStack)).size}
-            </div>
-            <p className="text-foreground/60 mt-2">Technologies Used</p>
-          </div>
+          <a href="/contact" className="btn-primary !px-12 !py-5 uppercase tracking-widest text-sm font-black whitespace-nowrap">
+            Request Custom Build
+          </a>
         </div>
       </div>
     </div>

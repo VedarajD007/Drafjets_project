@@ -1,0 +1,179 @@
+﻿npx : ΓÜá Warning: Next.js 
+inferred your workspace 
+root, but it may not be 
+correct.
+At line:1 char:1
++ npx next build 2>&1 | 
+Out-File C:\Users\vedra\Desk
+top\Drafjets.com\bu ...
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          
+    : NotSpecified: (ΓÜá W  
+  arning: Ne...not be cor   
+ rect.:String) [], Remot    
+eException
+    + FullyQualifiedErrorId 
+    : NativeCommandError
+ 
+ We detected multiple 
+lockfiles and selected the 
+directory of C:\Users\vedra\
+package-lock.json as the 
+root directory.
+ To silence this warning, 
+set `turbopack.root` in 
+your Next.js config, or 
+consider removing one of 
+the lockfiles if it's not 
+needed.
+   See https://nextjs.org/do
+cs/app/api-reference/config/
+next-config-js/turbopack#roo
+t-directory for more 
+information.
+ Detected additional 
+lockfiles: 
+   * C:\Users\vedra\Desktop\
+Drafjets.com\package-lock.js
+on
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Error: Cannot apply unknown 
+utility class `sm:px-6`. 
+Are you using CSS modules 
+or similar and missing 
+`@reference`? https://tailwi
+ndcss.com/docs/functions-and
+-directives#reference-direct
+ive
+    [2m[at 
+onInvalidCandidate (C:\Users
+\vedra\Desktop\Drafjets.com\
+node_modules\tailwindcss\dis
+t\lib.js:21:1314)][0m
+    [2m[at Te (C:\Users\ved
+ra\Desktop\Drafjets.com\node
+_modules\tailwindcss\dist\li
+b.js:16:36326)][0m
+    [2m[at C:\Users\vedra\D
+esktop\Drafjets.com\node_mod
+ules\tailwindcss\dist\lib.js
+:21:355][0m
+    [2m[at Rr (C:\Users\ved
+ra\Desktop\Drafjets.com\node
+_modules\tailwindcss\dist\li
+b.js:3:1718)][0m
+    [2m[at _ (C:\Users\vedr
+a\Desktop\Drafjets.com\node_
+modules\tailwindcss\dist\lib
+.js:3:1377)][0m
+    [2m[at $e (C:\Users\ved
+ra\Desktop\Drafjets.com\node
+_modules\tailwindcss\dist\li
+b.js:21:172)][0m
+    [2m[at un (C:\Users\ved
+ra\Desktop\Drafjets.com\node
+_modules\tailwindcss\dist\li
+b.js:38:294)][0m
+    [2m[at process.processT
+icksAndRejections (node:inte
+rnal/process/task_queues:95:
+5)][0m
+    [2m[at async cn (C:\Use
+rs\vedra\Desktop\Drafjets.co
+m\node_modules\tailwindcss\d
+ist\lib.js:38:631)][0m
+    [2m[at async Xr (C:\Use
+rs\vedra\Desktop\Drafjets.co
+m\node_modules\@tailwindcss\
+node\dist\index.js:10:3417)]
+[0m
+
+> Build error occurred
+Error: Turbopack build 
+failed with 1 errors:
+./Desktop/Drafjets.com/src/a
+pp/globals.css
+Error evaluating Node.js 
+code
+CssSyntaxError: 
+tailwindcss: C:\Users\vedra\
+Desktop\Drafjets.com\src\app
+\globals.css:1:1: Cannot 
+apply unknown utility class 
+`sm:px-6`. Are you using 
+CSS modules or similar and 
+missing `@reference`? https:
+//tailwindcss.com/docs/funct
+ions-and-directives#referenc
+e-directive
+    at Input.error (Desktop/
+Drafjets.com/node_modules/po
+stcss/lib/input.js:135:16) [
+C:\Users\vedra\Desktop\Drafj
+ets.com\.next\build\chunks\e
+c606_158c6277._.js:4651:22]
+    at Root.error (Desktop/D
+rafjets.com/node_modules/pos
+tcss/lib/node.js:146:32) [C:
+\Users\vedra\Desktop\Drafjet
+s.com\.next\build\chunks\ec6
+06_158c6277._.js:928:38]
+    [at Object.Once (C:\User
+s\vedra\Desktop\Drafjets.com
+\node_modules\@tailwindcss\p
+ostcss\dist\index.js:10:6911
+)]
+    [at process.processTicks
+AndRejections (node:internal
+/process/task_queues:95:5)]
+    at async 
+LazyResult.runAsync (Desktop
+/Drafjets.com/node_modules/p
+ostcss/lib/lazy-result.js:29
+3:11) [C:\Users\vedra\Deskto
+p\Drafjets.com\.next\build\c
+hunks\ec606_158c6277._.js:62
+06:21]
+    at async transform (turb
+opack:///[turbopack-node]/tr
+ansforms/postcss.ts:70:34) [
+C:\Users\vedra\Desktop\Drafj
+ets.com\.next\build\chunks\[
+root-of-the-server]__80a82b2
+0._.js:146:36]
+    at async run (turbopack:
+///[turbopack-node]/ipc/eval
+uate.ts:92:23) [C:\Users\ved
+ra\Desktop\Drafjets.com\.nex
+t\build\chunks\[root-of-the-
+server]__68549061._.js:443:3
+1]
+
+Import trace:
+  Client Component Browser:
+    ./Desktop/Drafjets.com/s
+rc/app/globals.css [Client 
+Component Browser]
+    ./Desktop/Drafjets.com/s
+rc/app/layout.tsx [Server 
+Component]
+
+
+    at async transform (turb
+opack:///[turbopack-node]/tr
+ansforms/postcss.ts:70:34) [
+C:\Users\vedra\Desktop\Drafj
+ets.com\.next\build\chunks\[
+root-of-the-server]__80a82b2
+0._.js:146:36])
+    at async run (turbopack:
+///[turbopack-node]/ipc/eval
+uate.ts:92:23) [C:\Users\ved
+ra\Desktop\Drafjets.com\.nex
+t\build\chunks\[root-of-the-
+server]__68549061._.js:443:3
+1])

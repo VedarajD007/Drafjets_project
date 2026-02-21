@@ -1,60 +1,78 @@
 'use client';
 
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Star, CheckCircle2, Users, Code, Rocket, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-dark">
-      {/* Animated background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-72 h-72 bg-secondary/10 rounded-full filter blur-3xl animate-pulse"></div>
+    <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-white" id="hero">
+      {/* Structural background decoration */}
+      <div className="absolute inset-0 grid-soft opacity-40 -z-10" />
+      <div className="absolute top-0 right-1/4 w-[1px] h-full bg-dark-50" />
+      <div className="absolute top-0 left-1/4 w-[1px] h-full bg-dark-50" />
+
+      {/* Soft brand glows for uniform light theme */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-50/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 -z-10" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-50/30 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 -z-10" />
+
+      <div className="relative z-10 container-main">
+        <div className="text-center max-w-4xl mx-auto space-y-10 lg:space-y-12">
+
+          {/* Uniform Badge */}
+          <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-brand-50 border border-brand-100 animate-fade-in shadow-sm">
+            <span className="flex h-2 w-2 rounded-full bg-brand-600 animate-pulse" />
+            <span className="text-xs font-black uppercase tracking-widest text-brand-700">Trusted by 1k+ Engineering Students</span>
+          </div>
+
+          {/* Clean Light Heading */}
+          <div className="space-y-6">
+            <h1 className="text-5xl md:text-8xl font-black text-dark-900 tracking-tighter leading-[0.9]" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+              Your VIVA, <br className="hidden md:block" />
+              Our <span className="text-gradient">Signature.</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-dark-500 max-w-3xl mx-auto leading-relaxed">
+              Premium <span className="text-dark-900 font-bold underline decoration-brand-500 decoration-4">Mini & Major Projects</span>.
+              Expertly designed, fully documented, and ready for your final defense.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4 animate-fade-up">
+            <Link
+              href="/projects"
+              className="btn-primary group w-full sm:w-auto !py-5 !px-12 text-sm uppercase tracking-widest"
+            >
+              Explore Repository
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              href="/contact"
+              className="btn-secondary w-full sm:w-auto !py-5 !px-12 text-sm uppercase tracking-widest"
+            >
+              Contact Support
+            </Link>
+          </div>
+
+          {/* Social Proof Stats */}
+          <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-dark-100 max-w-4xl mx-auto animate-fade-up">
+            {[
+              { val: '4.9/5', label: 'Average Rating', icon: <Star className="w-4 h-4 text-brand-500 fill-brand-500" /> },
+              { val: '100%', label: 'Delivery Rate', icon: <CheckCircle2 className="w-4 h-4 text-emerald-500" /> },
+              { val: '1.2k+', label: 'Total Projects', icon: <Rocket className="w-4 h-4 text-brand-500" /> },
+              { val: '24/7', label: 'Tech Support', icon: <Sparkles className="w-4 h-4 text-brand-600" /> },
+            ].map((stat) => (
+              <div key={stat.label} className="space-y-1 text-center">
+                <div className="text-3xl font-black text-dark-900" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{stat.val}</div>
+                <div className="flex items-center justify-center gap-1.5 text-[10px] font-bold text-dark-400 uppercase tracking-widest">
+                  {stat.icon}
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-neon bg-clip-text text-transparent animate-fade-in">
-          Build Your Final Year Project With Confidence 🚀
-        </h1>
-
-        <p className="text-xl md:text-2xl text-foreground/70 mb-8 max-w-3xl mx-auto animate-slide-up">
-          Professional Mini & Major Projects for IT Students
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-slide-up">
-          <Link
-            href="/projects"
-            className="px-8 py-4 bg-gradient-neon text-background font-semibold rounded-lg hover:shadow-neon-cyan transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105"
-          >
-            View Projects
-            <ArrowRight className="w-5 h-5" />
-          </Link>
-
-          <Link
-            href="/contact"
-            className="px-8 py-4 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary/10 transition-all duration-200"
-          >
-            Contact Us
-          </Link>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-2xl mx-auto mt-16">
-          <div className="p-6 bg-card/50 backdrop-blur rounded-lg border border-primary/20">
-            <div className="text-3xl font-bold bg-gradient-neon bg-clip-text text-transparent">50+</div>
-            <p className="text-foreground/60 text-sm mt-2">Projects</p>
-          </div>
-          <div className="p-6 bg-card/50 backdrop-blur rounded-lg border border-primary/20">
-            <div className="text-3xl font-bold bg-gradient-neon bg-clip-text text-transparent">1000+</div>
-            <p className="text-foreground/60 text-sm mt-2">Students</p>
-          </div>
-          <div className="p-6 bg-card/50 backdrop-blur rounded-lg border border-primary/20">
-            <div className="text-3xl font-bold bg-gradient-neon bg-clip-text text-transparent">100%</div>
-            <p className="text-foreground/60 text-sm mt-2">Success Rate</p>
-          </div>
-        </div>
-      </div>
     </section>
   );
 }

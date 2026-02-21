@@ -1,96 +1,104 @@
 'use client';
 
 import React from 'react';
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from 'lucide-react';
+import Link from 'next/link';
+import { Mail, Phone, Rocket, ArrowRight, Heart, MapPin } from 'lucide-react';
 import { CONTACT_INFO } from '@/lib/constants';
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="bg-card border-t border-primary/20 mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* About */}
-          <div>
-            <h3 className="text-lg font-bold bg-gradient-neon bg-clip-text text-transparent mb-4">
-              DrafJets
-            </h3>
-            <p className="text-foreground/60 text-sm">
-              Providing professional mini and major projects for IT students
+    <footer className="bg-white border-t border-dark-100 pt-20 pb-10 overflow-hidden" id="footer">
+      <div className="container-main">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+
+          {/* Brand Info */}
+          <div className="space-y-6">
+            <Link href="/" className="inline-flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center shadow-red">
+                <Rocket className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-2xl font-black text-dark-900" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                Draf<span className="text-brand-600">Jets</span>
+              </span>
+            </Link>
+            <p className="text-dark-500 text-[15px] leading-relaxed">
+              Premium IT project developers specializing in Mini and Major projects for IT & Engineering students across India. Uniform quality, expertise, and support.
             </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold mb-4 text-foreground">Quick Links</h4>
-            <ul className="space-y-2">
-              {['Home', 'Projects', 'About', 'Contact'].map((link) => (
-                <li key={link}>
-                  <a
-                    href={link === 'Home' ? '/' : `/${link.toLowerCase()}`}
-                    className="text-foreground/60 hover:text-primary transition-colors text-sm"
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-semibold mb-4 text-foreground">Services</h4>
-            <ul className="space-y-2">
-              {['MERN Stack', 'ML Projects', 'IoT Solutions', 'Full Stack'].map((service) => (
-                <li key={service}>
-                  <a href="#" className="text-foreground/60 hover:text-primary transition-colors text-sm">
-                    {service}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="font-semibold mb-4 text-foreground">Contact</h4>
-            <div className="space-y-3">
-              {CONTACT_INFO.phones.map((phone) => (
-                <a
-                  key={phone}
-                  href={`tel:${phone}`}
-                  className="flex items-center gap-2 text-foreground/60 hover:text-primary transition-colors text-sm"
-                >
-                  <Phone className="w-4 h-4" />
-                  {phone}
-                </a>
-              ))}
-              <a
-                href={`mailto:${CONTACT_INFO.email}`}
-                className="flex items-center gap-2 text-foreground/60 hover:text-primary transition-colors text-sm"
-              >
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-dark-50 border border-dark-100 flex items-center justify-center hover:bg-brand-50 hover:text-brand-600 transition-all cursor-pointer">
                 <Mail className="w-4 h-4" />
-                {CONTACT_INFO.email}
-              </a>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-dark-50 border border-dark-100 flex items-center justify-center hover:bg-brand-50 hover:text-brand-600 transition-all cursor-pointer">
+                <Phone className="w-4 h-4" />
+              </div>
             </div>
           </div>
+
+          {/* Navigation */}
+          <div>
+            <h4 className="text-dark-900 font-bold mb-6 text-lg" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Quick Links</h4>
+            <ul className="space-y-4">
+              {[
+                { label: 'Browse Projects', href: '/projects' },
+                { label: 'Technical Services', href: '/services' },
+                { label: 'About DrafJets', href: '/about' },
+                { label: 'Contact Support', href: '/contact' },
+              ].map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-dark-500 hover:text-brand-600 font-medium transition-colors flex items-center gap-2 group">
+                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 -ml-5 group-hover:ml-0 transition-all" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Popular Categories */}
+          <div>
+            <h4 className="text-dark-900 font-bold mb-6 text-lg" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Categories</h4>
+            <ul className="space-y-4">
+              {['MERN Stack Development', 'Python & Machine Learning', 'IoT & Embedded Systems', 'React Native Apps'].map((cat) => (
+                <li key={cat} className="text-dark-500 hover:text-brand-600 font-medium transition-colors flex items-center gap-2 cursor-pointer group">
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-200 group-hover:bg-brand-600 transition-colors" />
+                  {cat}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Details */}
+          <div>
+            <h4 className="text-dark-900 font-bold mb-6 text-lg" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Contact</h4>
+            <div className="space-y-5">
+              <div className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-brand-600 mt-1 flex-shrink-0" />
+                <div>
+                  <p className="text-dark-900 font-bold text-sm">Call/WhatsApp</p>
+                  <p className="text-dark-500 text-sm font-medium">+91 {CONTACT_INFO.whatsappNumber}</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Mail className="w-5 h-5 text-brand-600 mt-1 flex-shrink-0" />
+                <div>
+                  <p className="text-dark-900 font-bold text-sm">Email Support</p>
+                  <p className="text-dark-500 text-sm font-medium truncate">{CONTACT_INFO.email}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div className="border-t border-primary/20 pt-8">
-          <div className="flex justify-between items-center">
-            <p className="text-foreground/40 text-sm">
-              © 2026 DrafJets. All rights reserved.
-            </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-primary hover:text-primary/80 transition-colors">
-                <Github className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-primary hover:text-primary/80 transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-primary hover:text-primary/80 transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-            </div>
+        {/* Bottom Bar */}
+        <div className="border-t border-dark-100 pt-10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-dark-400 text-sm font-medium">
+            © {year} DrafJets. Developed for academic excellence.
+          </p>
+          <div className="flex items-center gap-2 text-dark-400 text-sm font-medium">
+            Developed with <Heart className="w-4 h-4 text-brand-500 fill-brand-500" /> by DrafJets Engineering
           </div>
         </div>
       </div>
