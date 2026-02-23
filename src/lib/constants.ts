@@ -1,7 +1,7 @@
 // Contact Information
 export const CONTACT_INFO = {
   phones: ['7411061639', '8088128508', '8073028732'],
-  email: 'drafjets.solutions@gmail.com',
+  email: 'drafjet.solutions@gmail.com',
   whatsappNumber: '7411061639',
 };
 

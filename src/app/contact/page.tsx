@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, Send, CheckCircle, MessageCircle, ArrowRight } from 'lucide-react';
 import { CONTACT_INFO } from '@/lib/constants';
+import { motion } from 'framer-motion';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -18,13 +19,22 @@ export default function ContactPage() {
     setLoading(true);
     try {
       const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) });
-      if (res.ok) { setSent(true); setForm({ name: '', email: '', phone: '', subject: '', message: '' }); setTimeout(() => setSent(false), 5000); }
+      if (res.ok) {
+        setSent(true);
+        setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+        // We keep the success message visible for a bit longer or forever until refresh
+      }
     } catch (e) { console.error(e); }
     finally { setLoading(false); }
   };
 
   return (
-    <div className="min-h-screen bg-white pt-24 pb-20 page-enter">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-white pt-24 pb-20 page-enter"
+    >
 
       {/* Header */}
       <section className="relative overflow-hidden pb-20">
@@ -58,7 +68,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="space-y-3 pl-1">
-                {CONTACT_INFO.phones.map((ph, i) => (
+                {CONTACT_INFO.phones.map((ph: string, i: number) => (
                   <a key={ph} href={`tel:${ph}`} className="group flex items-center gap-3 text-dark-400 hover:text-brand-600 transition-colors">
                     <span className="w-6 h-6 bg-brand-50 rounded-lg flex items-center justify-center text-[10px] font-bold text-brand-600 group-hover:bg-brand-100">{i + 1}</span>
                     <span className="font-semibold">+91 {ph}</span>
@@ -147,6 +157,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
