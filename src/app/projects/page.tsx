@@ -59,7 +59,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white pt-32 pb-24 page-enter">
+    <div className="min-h-screen bg-white pt-32 pb-24 page-enter transition-colors duration-500">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-50/20 rounded-full blur-[120px] -z-10" />
 
@@ -85,7 +85,7 @@ export default function ProjectsPage() {
               placeholder="Search by keywords..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-14 pr-6 py-4 bg-dark-50 border border-dark-200 rounded-2xl focus:outline-none focus:border-brand-300 focus:bg-white transition-all"
+              className="w-full pl-14 pr-6 py-4 bg-dark-50 border border-dark-200 rounded-2xl focus:outline-none focus:border-brand-300 focus:bg-white transition-all text-dark-900"
             />
           </div>
 
@@ -251,8 +251,8 @@ export default function ProjectsPage() {
               <div className="text-[10px] font-black text-dark-400 uppercase tracking-[0.3em]">Special Domains</div>
             </div>
             <div className="space-y-1 text-center md:text-left">
-              <div className="text-5xl font-black text-dark-900 tracking-tighter" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>1.2k</div>
-              <div className="text-[10px] font-black text-dark-400 uppercase tracking-[0.3em]">Daily Users</div>
+              <div className="text-5xl font-black text-dark-900 tracking-tighter" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Verified</div>
+              <div className="text-[10px] font-black text-dark-400 uppercase tracking-[0.3em]">Code Quality</div>
             </div>
           </div>
 

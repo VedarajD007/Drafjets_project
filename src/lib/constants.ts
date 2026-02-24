@@ -21,7 +21,7 @@ export const SERVICES = [
   },
   {
     id: '3',
-    title: 'Mini & Major Projects',
+    title: 'Custom Engineering Projects',
     description: 'Complete project solutions for IT students',
     icon: 'Zap',
   },
@@ -75,14 +75,12 @@ export const PROJECT_CATEGORIES = [
   { label: 'MERN Stack', value: 'MERN' },
   { label: 'AI/ML', value: 'ML' },
   { label: 'IoT & ECE', value: 'IoT' },
-  { label: 'Major', value: 'Major' },
-  { label: 'Mini', value: 'Mini' },
 ];
 
 // Site Info
 export const SITE_CONFIG = {
   name: 'DrafJets',
   tagline: 'Develop and Deploy',
-  description: 'Professional Mini & Major Projects for IT Students',
+  description: 'Professional Custom Engineering Projects for IT Students',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
 };

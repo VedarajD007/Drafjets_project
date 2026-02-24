@@ -57,7 +57,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
           {[
             { val: '50+', label: 'Projects Delivered', icon: <Code className="w-5 h-5" /> },
-            { val: '1000+', label: 'Happy Students', icon: <Users className="w-5 h-5" /> },
+            { val: '50+', label: 'Completed Projects', icon: <Users className="w-5 h-5" /> },
             { val: '100%', label: 'Success Rate', icon: <Award className="w-5 h-5" /> },
             { val: '24/7', label: 'Support', icon: <Clock className="w-5 h-5" /> },
           ].map((s) => (

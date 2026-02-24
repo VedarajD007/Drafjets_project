@@ -1,30 +1,28 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { getProjects } from '@/lib/project-loader';
+
 export const dynamic = 'force-dynamic';
-import { connectDB } from '@/lib/db';
-import Project from '@/models/Project';
 
-// GET all projects or filtered projects
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    await connectDB();
-    const projects = await Project.find({}).sort({ createdAt: -1 });
-    return NextResponse.json(projects);
-  } catch (error) {
-    console.error('Error fetching projects:', error);
-    return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
-  }
-}
+    const rawProjects = await getProjects();
 
-// POST create new project
-export async function POST(request: NextRequest) {
-  try {
-    await connectDB();
-    const data = await request.json();
+    // Map CSV projects to the format expected by the user's original UI
+    const mappedProjects = rawProjects.map(p => ({
+      _id: p.id,
+      projectId: p.id,
+      projectName: p.title,
+      category: p.domain, // Use domain as category
+      domain: p.domain,
+      technologyStack: p.technologies,
+      branch: p.domain.includes('IoT') || p.domain.includes('Arduino') ? 'ECE' : 'CSE',
+      difficultyLevel: 'Intermediate',
+      description: `Professional implementation of ${p.title} using ${p.technologies.join(', ')}.`
+    }));
 
-    const project = await Project.create(data);
-    return NextResponse.json(project, { status: 201 });
+    return NextResponse.json(mappedProjects);
   } catch (error) {
-    console.error('Error creating project:', error);
-    return NextResponse.json({ error: 'Failed to create project' }, { status: 500 });
+    console.error('API Error:', error);
+    return NextResponse.json({ error: 'Failed to load projects' }, { status: 500 });
   }
 }

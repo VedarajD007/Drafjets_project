@@ -231,7 +231,7 @@ export default function ProjectDetailsPage({ params }: { params: { id: string } 
                     <div className="absolute top-0 right-0 w-[500px] h-full bg-brand-600 -skew-x-[30deg] translate-x-1/2 opacity-20" />
                     <div className="relative z-10 space-y-6">
                         <h2 className="text-4xl md:text-6xl font-black text-white leading-none tracking-tighter" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Explore more <br />options?</h2>
-                        <p className="text-white/60 text-xl max-w-md font-medium">Browse our full 1k+ repository of verified technical architectures.</p>
+                        <p className="text-white/60 text-xl max-w-md font-medium">Browse our full repository of verified technical architectures.</p>
                     </div>
                     <Link href="/projects" className="relative z-10 btn-white !px-16 !py-6 !rounded-3xl uppercase tracking-widest font-black text-sm">
                         Open Library <ArrowRight className="w-5 h-5 ml-2" />

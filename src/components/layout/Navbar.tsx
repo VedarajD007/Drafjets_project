@@ -27,9 +27,9 @@ export default function Navbar() {
   useEffect(() => setIsOpen(false), [pathname]);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled ? 'py-3' : 'py-5'}`}>
-      <div className="container-main">
-        <div className={`relative px-5 py-3.5 rounded-3xl transition-all duration-300 ${scrolled ? 'glass-nav shadow-lg' : 'bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled || isOpen ? 'py-2 md:py-3 px-4 md:px-0' : 'py-5 px-4 md:px-0'}`}>
+      <div className="container-main p-0">
+        <div className={`relative px-6 py-4 rounded-[32px] transition-all duration-300 ${scrolled || isOpen ? 'bg-white shadow-2xl border border-dark-100' : 'bg-transparent border border-transparent'}`}>
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group">
@@ -82,24 +82,24 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu */}
-          <div className={`lg:hidden transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-[400px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
-            <div className="py-4 space-y-2 border-t border-dark-100">
+          <div className={`lg:hidden transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-[500px] opacity-100 mt-5' : 'max-h-0 opacity-0'}`}>
+            <div className="py-6 space-y-3 border-t border-dark-100">
               {links.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`block px-4 py-3 rounded-xl font-bold transition-all ${pathname === link.href ? 'bg-brand-50 text-brand-600' : 'text-dark-900 hover:bg-dark-50'
+                  className={`block px-5 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all ${pathname === link.href ? 'bg-brand-50 text-brand-600' : 'text-dark-900 hover:bg-dark-50'
                     }`}
                 >
                   {link.label}
                 </Link>
               ))}
-              <div className="pt-4 px-4 flex flex-col gap-3">
-                <a href={`tel:${CONTACT_INFO.phones[0]}`} className="flex items-center gap-3 p-3 rounded-xl bg-brand-50 text-brand-600 font-bold">
+              <div className="pt-6 flex flex-col gap-4">
+                <a href={`tel:${CONTACT_INFO.phones[0]}`} className="flex items-center justify-center gap-3 p-4 rounded-2xl bg-brand-50 text-brand-600 font-black uppercase tracking-widest text-xs">
                   <Phone className="w-4 h-4" />
                   +91 {CONTACT_INFO.phones[0]}
                 </a>
-                <Link href="/projects" className="btn-primary w-full !rounded-xl">
+                <Link href="/projects" className="btn-primary w-full !py-4 !rounded-2xl !text-xs !tracking-[0.2em]">
                   Explore Projects
                 </Link>
               </div>
